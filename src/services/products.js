@@ -25,3 +25,20 @@ export function create(values) {
     body: JSON.stringify(values),
   });
 }
+
+export function sts(url) {
+  OSS.urllib.request(url,
+                   {method: 'GET'},
+                   function (err, response) {
+  if (err) {
+   return alert(err);
+  }
+  try {
+   result = JSON.parse(response);
+  } catch (e) {
+   errmsg = 'parse sts response info error: ' + e.message;
+   return alert(errmsg);
+  }
+  // console.log(result)
+  })
+}
