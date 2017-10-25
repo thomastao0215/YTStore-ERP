@@ -67,7 +67,7 @@ var uploadFile = function (client,option) {
 };
 
 
-class ProductEditModal extends Component {
+class UserEditModal extends Component {
 
   constructor(props) {
     super(props);
@@ -120,7 +120,7 @@ class ProductEditModal extends Component {
     this.setState({ fileList })
   }
 
-  handleProductDetailSuccess = (body,file) => {
+  handleUserDetailSuccess = (body,file) => {
     console.log(body)
     var newFile = {
       uid:body.name,
@@ -166,7 +166,7 @@ class ProductEditModal extends Component {
     }
 
   handleChange = ({ fileList }) => {this.setState({ fileList })}
-  handleProductDetailChange = ({ productDetailList }) => {this.setState({ productDetailList })}
+  handleUserDetailChange = ({ productDetailList }) => {this.setState({ productDetailList })}
 
   okHandler = () => {
     const { onOk } = this.props;
@@ -301,7 +301,7 @@ class ProductEditModal extends Component {
           { children }
         </span>
         <Modal
-          title="Edit Product"
+          title="Edit User"
           visible={this.state.visible}
           onOk={this.okHandler}
           onCancel={this.hideModelHandler}
@@ -514,8 +514,8 @@ class ProductEditModal extends Component {
                       fileList={productDetailList}
                       onPreview={this.handlePreview}
                       onProgres={this.handleProgress}
-                      onSuccess={this.handleProductDetailSuccess}
-                      onChange={this.handleProductDetailChange}
+                      onSuccess={this.handleUserDetailSuccess}
+                      onChange={this.handleUserDetailChange}
                     >
                       {productDetailList.length >= 6 ? null : uploadButton}
                     </Upload>
@@ -533,4 +533,4 @@ class ProductEditModal extends Component {
   }
 }
 
-export default Form.create()(ProductEditModal);
+export default Form.create()(UserEditModal);

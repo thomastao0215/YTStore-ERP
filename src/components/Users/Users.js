@@ -2,12 +2,12 @@ import React from 'react';
 import { connect } from 'dva';
 import { Table, Pagination, Popconfirm, Button } from 'antd';
 import { routerRedux } from 'dva/router';
-import styles from './Products.css';
+import styles from './Users.css';
 import { PAGE_SIZE } from '../../constants';
-import ProductModal from './ProductModal';
+import UserModal from './UserModal';
 
 
-function Products({ dispatch, list: dataSource, loading, total, page: current }) {
+function Users({ dispatch, list: dataSource, loading, total, page: current }) {
   function deleteHandler(id) {
     dispatch({
       type: 'users/remove',
@@ -38,94 +38,112 @@ function Products({ dispatch, list: dataSource, loading, total, page: current })
 
   const columns = [
     {
-      title: '商品id',
+      title: ' 用户id',
       dataIndex: 'id',
       key: 'id',
       fixed: 'left'
     },
     {
-      title: '商品码',
-      dataIndex: 'productCode',
-      key: 'productCode',
+      title: '用户名',
+      dataIndex: 'username',
+      key: 'username',
       fixed: 'left',
       width: '100px',
       render: text => <a href="">{text}</a>,
     },
     {
-      title: '商品类别',
-      dataIndex: 'category',
-      key: 'category',
+      title: '手机号',
+      dataIndex: 'phone',
+      key: 'phone',
       width: '100px',
     },
     {
-      title: '商品名',
-      dataIndex: 'name',
-      key: 'name',
-      width: '100px',
-      render: text => <a href="">{text}</a>,
-    },
-    {
-      title: '品牌',
-      dataIndex: 'brand',
-      key: 'brand',
+      title: '昵称',
+      dataIndex: 'nickName',
+      key: 'nickName',
       width: '100px',
       render: text => <a href="">{text}</a>,
     },
     {
-      title: '系列',
-      dataIndex: 'series',
-      key: 'series',
+      title: '头像',
+      dataIndex: 'headerImgUrl',
+      key: 'headerImgUrl',
       width: '100px',
       render: text => <a href="">{text}</a>,
     },
     {
-      title: '型号',
-      dataIndex: 'model',
-      key: 'model',
+      title: '签名',
+      dataIndex: 'signature',
+      key: 'signature',
       width: '100px',
       render: text => <a href="">{text}</a>,
     },
     {
-      title: '商品价格',
-      dataIndex: 'Price',
-      key: 'Price',
+      title: '生日',
+      dataIndex: 'birthday',
+      key: 'birthday',
+      width: '100px',
+      render: text => <a href="">{text}</a>,
+    },
+    {
+      title: '性别',
+      dataIndex: 'gender',
+      key: 'gender',
       width: '100px'
     },
     {
-      title: '商品描述',
-      dataIndex: 'productDesc',
-      key: 'productDesc',
+      title: '身份',
+      dataIndex: 'identity',
+      key: 'identity',
+      width: '100px',
+    },
+    {
+      title: '关联微信',
+      dataIndex: 'realatedWechat',
+      key: 'realatedWechat',
       width: '100px',
     },
 
     {
-      title: '库存',
-      dataIndex: 'stock',
-      key: 'stock',
+      title: '关联微博',
+      dataIndex: 'realatedWeibo',
+      key: 'realatedWeibo',
       width: '100px',
     },
     {
-      title: '销量',
-      dataIndex: 'sale',
-      key: 'sale',
+      title: '关联QQ',
+      dataIndex: 'relatedQQ',
+      key: 'relatedQQ',
       width: '100px',
     },
     {
-      title: '商品原价',
-      dataIndex: 'originPrice',
-      key: 'originPrice',
+      title: '黑卡会员',
+      dataIndex: 'member',
+      key: 'member',
       width: '100px',
     },
     {
-      title: '原产地',
-      dataIndex: 'origin',
-      key: 'origin',
+      title: '当月消费额',
+      dataIndex: 'monthlySpending',
+      key: 'monthlySpending',
       width: '100px',
     },
     {
-      title: '状态',
-      dataIndex: 'status',
-      key: 'status',
+      title: '累计消费额',
+      dataIndex: 'totalSpending',
+      key: 'totalSpending',
+      width: '100px',
+    },
+    {
+      title: '推荐人数',
+      dataIndex: 'recommendation',
+      key: 'recommendation',
+      width: '100px',
+    },
+    {
+      title: '',
+      dataIndex: 'recommendation',
+      key: 'recommendation',
       width: '100px',
     },
     {
@@ -134,9 +152,9 @@ function Products({ dispatch, list: dataSource, loading, total, page: current })
       fixed: 'right',
       render: (text, record) => (
         <span className={styles.operation}>
-          <ProductModal record={record} onOk={editHandler.bind(null, record.id)}>
+          <UserModal record={record} onOk={editHandler.bind(null, record.id)}>
             <a>编辑</a>
-          </ProductModal>
+          </UserModal>
           <Popconfirm title="Confirm to delete?" onConfirm={deleteHandler.bind(null, record.id)}>
             <a href="">删除</a>
           </Popconfirm>
@@ -149,9 +167,9 @@ function Products({ dispatch, list: dataSource, loading, total, page: current })
     <div className={styles.normal}>
       <div>
         <div className={styles.create}>
-          <ProductModal record={{}} onOk={createHandler}>
-            <Button type="primary">Create Product</Button>
-          </ProductModal>
+          <UserModal record={{}} onOk={createHandler}>
+            <Button type="primary">Create User</Button>
+          </UserModal>
         </div>
         <Table
           columns={columns}
@@ -159,7 +177,7 @@ function Products({ dispatch, list: dataSource, loading, total, page: current })
           loading={loading}
           rowKey={record => record.id}
           pagination={false}
-          scroll={{ x: 1370 }}
+          scroll={{ x: 1200 }}
 
         />
         <Pagination
@@ -175,13 +193,13 @@ function Products({ dispatch, list: dataSource, loading, total, page: current })
 }
 
 function mapStateToProps(state) {
-  const { list, total, page } = state.products;
+  const { list, total, page } = state.users;
   return {
-    loading: state.loading.models.products,
+    loading: state.loading.models.users,
     list,
     total,
     page,
   };
 }
 
-export default connect(mapStateToProps)(Products);
+export default connect(mapStateToProps)(Users);
