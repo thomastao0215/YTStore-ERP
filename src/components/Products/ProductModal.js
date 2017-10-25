@@ -249,7 +249,7 @@ class ProductEditModal extends Component {
 
     const options = [{
       value: 'beauty',
-      label: '美妆',
+      label: '美妆护肤',
       children: [{
         value: 'hangzhou',
         label: 'Hangzhou',
@@ -262,11 +262,47 @@ class ProductEditModal extends Component {
       value: 'food',
       label: '食品',
       children: [{
-        value: 'nanjing',
-        label: 'Nanjing',
+        value: 'drink',
+        label: '饮料',
         children: [{
-          value: 'zhonghuamen',
-          label: 'Zhong Hua Men',
+          value: 'Coffee & Tea',
+          label: '咖啡 & 茶',
+        },
+        {
+          value: 'Milk & Yogurt',
+          label: '牛奶 & 优格',
+        },
+        {
+          value: 'Soft Drink & Juice',
+          label: '软饮 & 果汁',
+        }],
+      },
+      {
+        value: 'candy&chocolate',
+        label: '糖果 & 巧克力',
+        children: [{
+          value: 'Candy',
+          label: '糖果',
+        },
+        {
+          value: 'Chocolate',
+          label: '巧克力',
+        },
+        {
+          value: 'Jelly & Pudding',
+          label: '果冻 & 布丁',
+        }],
+      },
+      {
+        value: 'CAKES & COOKIES',
+        label: '糕点 & 饼干',
+        children: [{
+          value: 'Cakes',
+          label: '糕点',
+        },
+        {
+          value: 'COOKIES',
+          label: '饼干',
         }],
       }],
     },

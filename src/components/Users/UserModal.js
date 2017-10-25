@@ -80,14 +80,7 @@ class UserEditModal extends Component {
         name: 'xxx.png',
         status: 'done',
         url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-      }],
-      productDetailList: [
-        {
-          uid: -1,
-          name: 'xxx.png',
-          status: 'done',
-          url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-        }]
+      }]
     };
   }
 
@@ -166,7 +159,6 @@ class UserEditModal extends Component {
     }
 
   handleChange = ({ fileList }) => {this.setState({ fileList })}
-  handleUserDetailChange = ({ productDetailList }) => {this.setState({ productDetailList })}
 
   okHandler = () => {
     const { onOk } = this.props;
@@ -174,7 +166,6 @@ class UserEditModal extends Component {
       if (!err) {
 
         values['banner'] = this.state.fileList
-        values['productDetail'] = this.state.productDetailList
         console.log(values)
         onOk(values);
         this.hideModelHandler();
@@ -238,7 +229,7 @@ class UserEditModal extends Component {
     }
 
     const { getFieldDecorator } = this.props.form;
-    const { productCategory,productName,price ,productDesc,brand,series,model ,productCode ,title, stock,sale,originPrice,origin,imgurl,banner,tags,productDetail} = this.props.record;
+    const { username,phone,nickName,headimgurl,signature,sex,province,city,birthday} = this.props.record;
     const formItemLayout = {
       labelCol: { span: 6 },
       wrapperCol: { span: 14 },
@@ -246,54 +237,6 @@ class UserEditModal extends Component {
     var onChange = function(value) {
         console.log(value);
     }
-
-    const options = [{
-      value: 'beauty',
-      label: '美妆',
-      children: [{
-        value: 'hangzhou',
-        label: 'Hangzhou',
-        children: [{
-          value: 'xihu',
-          label: 'West Lake',
-        }],
-      }],
-    }, {
-      value: 'food',
-      label: '食品',
-      children: [{
-        value: 'nanjing',
-        label: 'Nanjing',
-        children: [{
-          value: 'zhonghuamen',
-          label: 'Zhong Hua Men',
-        }],
-      }],
-    },
-    {
-      value: 'daily',
-      label: '日常护理',
-      children: [{
-        value: 'nanjing',
-        label: 'Nanjing',
-        children: [{
-          value: 'zhonghuamen',
-          label: 'Zhong Hua Men',
-        }],
-      }],
-    },
-    {
-      value: 'clothes',
-      label: '服饰',
-      children: [{
-        value: 'nanjing',
-        label: 'Nanjing',
-        children: [{
-          value: 'zhonghuamen',
-          label: 'Zhong Hua Men',
-        }],
-      }],
-    }];
 
     return (
       <span>
@@ -307,225 +250,7 @@ class UserEditModal extends Component {
           onCancel={this.hideModelHandler}
         >
           <Form horizontal onSubmit={this.okHandler}>
-          <FormItem
-            {...formItemLayout}
-            label="商品码"
-          >
-            {
-              getFieldDecorator('productCode', {
-                initialValue: productCode,
-              })(<Input />)
-            }
-          </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="商品类别"
-            >
-              {
-                getFieldDecorator('productCategory', {
-                  initialValue: productCategory,
-                })(<Cascader options={options} onChange={onChange} placeholder="选择类别" changeOnSelect />)
-              }
-            </FormItem>
-              <FormItem
-                {...formItemLayout}
-                label="商品名"
-              >
-                {
-                  getFieldDecorator('productName', {
-                    initialValue: productName,
-                  })(<Input />)
-                }
-              </FormItem>
-              <FormItem
-                {...formItemLayout}
-                label="品牌"
-              >
-                {
-                  getFieldDecorator('brand', {
-                    initialValue: brand,
-                  })(
-                    <Select
-                      showSearch
-                      style={{ width: 200 }}
-                      placeholder="选择品牌"
-                      optionFilterProp="children"
-                      onChange={this.handleOriginChange}
-                      onFocus={handleFocus}
-                      onBlur={handleBlur}
-                      filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                    >
-                      {childrenBrand}
-                    </Select>
-                  )
-                }
-              </FormItem>
-              <FormItem
-                {...formItemLayout}
-                label="系列"
-              >
-                {
-                  getFieldDecorator('series', {
-                    initialValue: series,
-                  })(<Input />)
-                }
-              </FormItem>
-              <FormItem
-                {...formItemLayout}
-                label="型号"
-              >
-              {
-                getFieldDecorator('model', {
-                  initialValue: model,
-                })(
-                  <Select
-                    mode="tags"
-                    style={{ width: '100%' }}
-                    placeholder="型号"
-                    onChange={this.handleModelChange}
-                  >
-                    {childrenx}
-                  </Select>
-                )
-              }
-              </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="库存"
-            >
-              {
-                getFieldDecorator('stock', {
-                  initialValue: stock,
-                })(<Input />)
-              }
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="价格"
-            >
-              {
-                getFieldDecorator('price', {
-                  initialValue: price,
-                })(<Input />)
-              }
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="商品描述"
-            >
-              {
-                getFieldDecorator('productDesc', {
-                  initialValue: productDesc,
-                })(<TextArea rows={4} />)
-              }
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="商品原价"
-            >
-              {
-                getFieldDecorator('originPrice', {
-                  initialValue: originPrice,
-                })(<Input />)
-              }
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="原产地"
-            >
-              {
-                getFieldDecorator('origin', {
-                  initialValue: origin,
-                })(
-                  <Select
-                    showSearch
-                    style={{ width: 200 }}
-                    placeholder="选择原产地"
-                    optionFilterProp="children"
-                    onChange={this.handleOriginChange}
-                    onFocus={handleFocus}
-                    onBlur={handleBlur}
-                    filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                  >
-                    {childrenOrigin}
-                  </Select>
-                )
-              }
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="属性&活动"
-            >
-              {
-                getFieldDecorator('tags', {
-                  initialValue: tags,
-                })(
-                  <Select
-                    mode="multiple"
-                    style={{ width: '100%' }}
-                    placeholder="属性&活动"
-                    onChange={this.handleTagsChange}
-                  >
-                    {childrenEvents}
-                  </Select>
-                )
-              }
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="轮播图"
-            >
-              {
-                getFieldDecorator('banner', {
-                  initialValue: banner,
-                })(
-                  <div className="clearfix">
-                    <Upload
-                      customRequest={this.upload}
-                      listType="picture-card"
-                      fileList={fileList}
-                      onPreview={this.handlePreview}
-                      onProgres={this.handleProgress}
-                      onSuccess={this.handleSuccess}
-                      onChange={this.handleChange}
-                    >
-                      {fileList.length >= 3 ? null : uploadButton}
-                    </Upload>
-                    <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
-                      <img alt="example" style={{ width: '100%' }} src={previewImage} />
-                    </Modal>
-                  </div>
-                )
-              }
-            </FormItem>
 
-            <FormItem
-              {...formItemLayout}
-              label="商品详情图"
-            >
-              {
-                getFieldDecorator('productDetail', {
-                  initialValue: productDetail,
-                })(
-                  <div className="clearfix">
-                    <Upload
-                      customRequest={this.upload}
-                      listType="picture-card"
-                      fileList={productDetailList}
-                      onPreview={this.handlePreview}
-                      onProgres={this.handleProgress}
-                      onSuccess={this.handleUserDetailSuccess}
-                      onChange={this.handleUserDetailChange}
-                    >
-                      {productDetailList.length >= 6 ? null : uploadButton}
-                    </Upload>
-                    <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
-                      <img alt="example" style={{ width: '100%' }} src={previewImage} />
-                    </Modal>
-                  </div>
-                )
-              }
-            </FormItem>
           </Form>
         </Modal>
       </span>

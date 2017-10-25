@@ -140,12 +140,7 @@ function Users({ dispatch, list: dataSource, loading, total, page: current }) {
       key: 'recommendation',
       width: '100px',
     },
-    {
-      title: '',
-      dataIndex: 'recommendation',
-      key: 'recommendation',
-      width: '100px',
-    },
+
     {
       title: '操作',
       key: 'operation',
@@ -177,7 +172,7 @@ function Users({ dispatch, list: dataSource, loading, total, page: current }) {
           loading={loading}
           rowKey={record => record.id}
           pagination={false}
-          scroll={{ x: 1200 }}
+          scroll={{ x: 1650 }}
 
         />
         <Pagination
