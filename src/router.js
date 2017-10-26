@@ -3,6 +3,8 @@ import { Router } from 'dva/router';
 
 import Users from "./routes/Users.js";
 
+import Orders from "./routes/Orders.js";
+
 const cached = {};
 function registerModel(app, model) {
   if (!cached[model.namespace]) {
@@ -39,6 +41,16 @@ function RouterConfig({ history, app }) {
         require.ensure([], (require) => {
           registerModel(app, require('./models/users'));
           cb(null, require('./routes/Users'));
+        });
+      },
+    },
+    {
+      path: '/orders',
+      name: 'OrdersPage',
+      getComponent(nextState, cb) {
+        require.ensure([], (require) => {
+          registerModel(app, require('./models/orders'));
+          cb(null, require('./routes/Orders.js'));
         });
       },
     },
