@@ -3,8 +3,8 @@
   "disableCSSModules": false,
   "publicPath": "/",
   "theme": {
-    "@primary-color": "#1DA57A",
-    "@link-color": "#1DA57A",
+    "@primary-color": "#8E2428",
+    "@link-color": "#8E2428",
     "@border-radius-base": "2px",
     "@font-size-base": "16px",
     "@line-height-base": "1.2"

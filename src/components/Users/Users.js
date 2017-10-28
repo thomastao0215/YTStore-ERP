@@ -148,10 +148,10 @@ function Users({ dispatch, list: dataSource, loading, total, page: current }) {
       render: (text, record) => (
         <span className={styles.operation}>
           <UserModal record={record} onOk={editHandler.bind(null, record.id)}>
-            <a>编辑</a>
+            <Button>编辑</Button>
           </UserModal>
           <Popconfirm title="Confirm to delete?" onConfirm={deleteHandler.bind(null, record.id)}>
-            <a href="">删除</a>
+            <Button href="">删除</Button>
           </Popconfirm>
         </span>
       ),
@@ -162,9 +162,7 @@ function Users({ dispatch, list: dataSource, loading, total, page: current }) {
     <div className={styles.normal}>
       <div>
         <div className={styles.create}>
-          <UserModal record={{}} onOk={createHandler}>
-            <Button type="primary">Create User</Button>
-          </UserModal>
+
         </div>
         <Table
           columns={columns}
@@ -172,7 +170,7 @@ function Users({ dispatch, list: dataSource, loading, total, page: current }) {
           loading={loading}
           rowKey={record => record.id}
           pagination={false}
-          scroll={{ x: 1650 }}
+          scroll={{ x: 1725 }}
 
         />
         <Pagination

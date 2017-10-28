@@ -196,10 +196,10 @@ function Orders({ dispatch, list: dataSource, loading, total, page: current }) {
       render: (text, record) => (
         <span className={styles.operation}>
           <OrderModal record={record} onOk={editHandler.bind(null, record.id)}>
-            <a>编辑</a>
+            <Button>编辑</Button>
           </OrderModal>
           <Popconfirm title="Confirm to delete?" onConfirm={deleteHandler.bind(null, record.id)}>
-            <a href="">删除</a>
+            <Button href="">删除</Button>
           </Popconfirm>
         </span>
       ),
@@ -216,7 +216,7 @@ function Orders({ dispatch, list: dataSource, loading, total, page: current }) {
           loading={loading}
           rowKey={record => record.id}
           pagination={false}
-          scroll={{ x: 2350 }}
+          scroll={{ x: 2520 }}
         />
         <Pagination
           className="ant-table-pagination"

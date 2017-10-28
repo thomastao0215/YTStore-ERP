@@ -129,6 +129,30 @@ function Products({ dispatch, list: dataSource, loading, total, page: current })
       width: '100px',
     },
     {
+      title: '点击量',
+      dataIndex: 'clicks',
+      key: 'clicks',
+      width: '100px',
+    },
+    {
+      title: '收藏量',
+      dataIndex: 'collection',
+      key: 'collection',
+      width: '100px',
+    },
+    {
+      title: '加入购物车量',
+      dataIndex: 'cart',
+      key: 'cart',
+      width: '150px',
+    },
+    {
+      title: '权重',
+      dataIndex: 'weight',
+      key: 'weight',
+      width: '100px',
+    },
+    {
       title: '操作',
       key: 'operation',
       fixed: 'right',
@@ -159,7 +183,7 @@ function Products({ dispatch, list: dataSource, loading, total, page: current })
           loading={loading}
           rowKey={record => record.id}
           pagination={false}
-          scroll={{ x: 1370 }}
+          scroll={{ x: 1900 }}
 
         />
         <Pagination

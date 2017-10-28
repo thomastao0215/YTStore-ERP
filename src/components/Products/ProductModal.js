@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Modal, Form, Input ,Upload, Icon, Cascader,Select} from 'antd';
+import { Modal, Form, Input ,Upload, Icon, Cascader,Select,InputNumber} from 'antd';
 
 
 const FormItem = Form.Item;
 const { TextArea } = Input;
-var appServer = "http://localhost:8080/sts/do";
+var appServer = "http://api.ytstore.com.cn/sts/do";
 var bucket = 'xyq-oss-bucket';
 var endpoint = 'oss-cn-shenzhen.aliyuncs.com';
 
@@ -75,19 +75,9 @@ class ProductEditModal extends Component {
       visible: false,
       previewVisible: false,
       previewImage: '',
-      fileList: [{
-        uid: -1,
-        name: 'xxx.png',
-        status: 'done',
-        url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-      }],
-      productDetailList: [
-        {
-          uid: -1,
-          name: 'xxx.png',
-          status: 'done',
-          url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-        }]
+      Avatar: [],
+      fileList: [],
+      productDetailList: []
     };
   }
 
@@ -120,6 +110,22 @@ class ProductEditModal extends Component {
     this.setState({ fileList })
   }
 
+  handleAvatarSuccess = (body,file) => {
+    console.log(body)
+    var newFile = {
+      uid:body.name,
+      name:body.name,
+      status:'done',
+      url:'http://xyq-oss-bucket.oss-cn-shenzhen.aliyuncs.com/'+body.name
+    }
+    var {Avatar} = this.state
+    console.log(Avatar)
+    Avatar.pop()
+    Avatar.push(newFile)
+    console.log(Avatar)
+    this.setState({ Avatar })
+  }
+
   handleProductDetailSuccess = (body,file) => {
     console.log(body)
     var newFile = {
@@ -132,14 +138,15 @@ class ProductEditModal extends Component {
     console.log(productDetailList)
     productDetailList.pop()
     productDetailList.push(newFile)
-    console.log(fileList)
-    this.setState({ fileList })
+    console.log(productDetailList)
+    this.setState({ productDetailList })
   }
 
   handleProgress = (event) => {
     console.log(event.percent)
   }
   handleCancel = () => this.setState({ previewVisible: false })
+
   hideModelHandler = () => {
     this.setState({
       visible: false,
@@ -165,14 +172,17 @@ class ProductEditModal extends Component {
       console.log(`selected ${value}`);
     }
 
-  handleChange = ({ fileList }) => {this.setState({ fileList })}
-  handleProductDetailChange = ({ productDetailList }) => {this.setState({ productDetailList })}
+  handleChange = ({fileList}) => {this.setState({ fileList:fileList })}
+  handleAvatarChange = ({fileList}) => {this.setState({Avatar:fileList})}
+  handleProductDetailChange = ({ fileList }) => {
+    this.setState({ productDetailList:fileList })
+  }
 
   okHandler = () => {
     const { onOk } = this.props;
     this.props.form.validateFields((err, values) => {
       if (!err) {
-
+        values['avatar'] = this.state.Avatar
         values['banner'] = this.state.fileList
         values['productDetail'] = this.state.productDetailList
         console.log(values)
@@ -183,7 +193,10 @@ class ProductEditModal extends Component {
   };
 
   render() {
-    const { previewVisible, previewImage, fileList, productDetailList }  = this.state;
+    const { previewVisible, previewImage, fileList,Avatar,productDetailList }  = this.state;
+    console.log(fileList)
+    console.log(Avatar)
+    console.log(productDetailList)
     const uploadButton = (
       <div>
         <Icon type="plus" />
@@ -209,12 +222,7 @@ class ProductEditModal extends Component {
       { key:'1002',value:'CPB'},
       { key:'1003',value:'Dior'},
       { key:'1004',value:'TW'},
-      { key:'1005',value:'US'},
-      { key:'1006',value:'GB'},
-      { key:'1007',value:'IT'},
-      { key:'1008',value:'FR'},
-      { key:'1009',value:'DE'},
-      { key:'1010',value:'TH'},
+
     ]
 
     const events = [
@@ -238,7 +246,7 @@ class ProductEditModal extends Component {
     }
 
     const { getFieldDecorator } = this.props.form;
-    const { productCategory,productName,price ,productDesc,brand,series,model ,productCode ,title, stock,sale,originPrice,origin,imgurl,banner,tags,productDetail} = this.props.record;
+    const { productCategory,productName,price ,productDesc,brand,series,model ,productCode ,title, stock,sale,originPrice,origin,imgurl,banner,tags,productDetail,avatar} = this.props.record;
     const formItemLayout = {
       labelCol: { span: 6 },
       wrapperCol: { span: 14 },
@@ -247,18 +255,66 @@ class ProductEditModal extends Component {
         console.log(value);
     }
 
-    const options = [{
-      value: 'beauty',
-      label: '美妆护肤',
-      children: [{
-        value: 'hangzhou',
-        label: 'Hangzhou',
+    const options = [
+      {
+      value: 'beauty-and-skincare',
+      label: '美妆和护肤',
+      children: [
+      {
+        value: 'skincare',
+        label: '护肤',
+        children: [
+        {value: 'CLEANSING',label: '卸妝清潔'},
+        {value: 'CREAM / MOISTURIZER',label: '面霜 / 乳液'},
+        {
+          value: 'EYELIP CARE',
+          label: '眼唇護理',
+        },
+        {
+          value: 'LOTION',
+          label: '爽膚',
+        },
+        {
+          value: 'SERUM',
+          label: '精華',
+        },
+        {
+          value: 'SPECIAL CARE',
+          label: '特別修護',
+        },
+        {value:"UVPROTECTION / CC CREAM",label:"防曬 / CC霜"}],
+      },
+      {
+        value: 'makeup',
+        label: '彩妆',
         children: [{
-          value: 'xihu',
-          label: 'West Lake',
+          value: 'LIPS',
+          label: '唇妆',
+          children:[
+            {value:"LIP LINER",label:"唇線修飾筆"},
+            {value:"LIPSTAIN",label:"唇釉"},
+            {value:"LIPGLOSS",label:"唇彩"},
+            {value:"LIPSTICK",label:"唇膏"},
+            {value:"GLOSSYSTAIN",label:"唇蜜"},
+            {value:"LIPPRIMER",label:"唇部底霜"}
+          ]
+        },
+        {
+          value: 'COMPLEXION',
+          label: '卸妆',
+          children:[
+            {value:"a",label:"氣墊粉底"},
+            {value:"b",label:"底霜"},
+            {value:"c",label:"明彩筆"},
+            {value:"d",label:"粉底"},
+            {value:"e",label:"粉餅"},
+            {value:"f",label:"胭脂"},
+            {value:"g",label:"蜜粉"}
+          ]
         }],
-      }],
-    }, {
+      }]
+      },
+     {
       value: 'food',
       label: '食品',
       children: [{
@@ -303,30 +359,6 @@ class ProductEditModal extends Component {
         {
           value: 'COOKIES',
           label: '饼干',
-        }],
-      }],
-    },
-    {
-      value: 'daily',
-      label: '日常护理',
-      children: [{
-        value: 'nanjing',
-        label: 'Nanjing',
-        children: [{
-          value: 'zhonghuamen',
-          label: 'Zhong Hua Men',
-        }],
-      }],
-    },
-    {
-      value: 'clothes',
-      label: '服饰',
-      children: [{
-        value: 'nanjing',
-        label: 'Nanjing',
-        children: [{
-          value: 'zhonghuamen',
-          label: 'Zhong Hua Men',
         }],
       }],
     }];
@@ -431,8 +463,8 @@ class ProductEditModal extends Component {
             >
               {
                 getFieldDecorator('stock', {
-                  initialValue: stock,
-                })(<Input />)
+                  initialValue: 1,
+                })(<InputNumber min={1} onChange={onChange} />)
               }
             </FormItem>
             <FormItem
@@ -441,8 +473,14 @@ class ProductEditModal extends Component {
             >
               {
                 getFieldDecorator('price', {
-                  initialValue: price,
-                })(<Input />)
+                  initialValue: 100,
+                })(
+                  <InputNumber
+
+                    formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                    parser={value => value.replace(/\$\s?|(,*)/g, '')}
+                  />
+                )
               }
             </FormItem>
             <FormItem
@@ -461,8 +499,13 @@ class ProductEditModal extends Component {
             >
               {
                 getFieldDecorator('originPrice', {
-                  initialValue: originPrice,
-                })(<Input />)
+                  initialValue: 100,
+                })(
+                  <InputNumber
+                    formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                    parser={value => value.replace(/\$\s?|(,*)/g, '')}
+                  />
+                )
               }
             </FormItem>
             <FormItem
@@ -507,13 +550,42 @@ class ProductEditModal extends Component {
                 )
               }
             </FormItem>
+
+            <FormItem
+              {...formItemLayout}
+              label="小图"
+            >
+              {
+                getFieldDecorator('avatar', {
+
+                })(
+                  <div className="clearfix">
+                    <Upload
+                      customRequest={this.upload}
+                      listType="picture-card"
+                      fileList={Avatar}
+                      onPreview={this.handlePreview}
+
+                      onSuccess={this.handleAvatarSuccess}
+                      onChange={this.handleAvatarChange}
+                    >
+                      {fileList.length >= 2 ? null : uploadButton}
+                    </Upload>
+                    <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
+                      <img alt="example" style={{ width: '100%' }} src={previewImage} />
+                    </Modal>
+                  </div>
+                )
+              }
+            </FormItem>
+
             <FormItem
               {...formItemLayout}
               label="轮播图"
             >
               {
                 getFieldDecorator('banner', {
-                  initialValue: banner,
+
                 })(
                   <div className="clearfix">
                     <Upload
@@ -521,7 +593,7 @@ class ProductEditModal extends Component {
                       listType="picture-card"
                       fileList={fileList}
                       onPreview={this.handlePreview}
-                      onProgres={this.handleProgress}
+
                       onSuccess={this.handleSuccess}
                       onChange={this.handleChange}
                     >
@@ -541,7 +613,7 @@ class ProductEditModal extends Component {
             >
               {
                 getFieldDecorator('productDetail', {
-                  initialValue: productDetail,
+
                 })(
                   <div className="clearfix">
                     <Upload
@@ -549,7 +621,7 @@ class ProductEditModal extends Component {
                       listType="picture-card"
                       fileList={productDetailList}
                       onPreview={this.handlePreview}
-                      onProgres={this.handleProgress}
+
                       onSuccess={this.handleProductDetailSuccess}
                       onChange={this.handleProductDetailChange}
                     >
