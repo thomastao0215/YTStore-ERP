@@ -87,8 +87,8 @@ function Users({ dispatch, list: dataSource, loading, total, page: current }) {
     },
     {
       title: '性别',
-      dataIndex: 'gender',
-      key: 'gender',
+      dataIndex: 'sex',
+      key: 'sex',
       width: '100px'
     },
     {
@@ -118,8 +118,8 @@ function Users({ dispatch, list: dataSource, loading, total, page: current }) {
     },
     {
       title: '黑卡会员',
-      dataIndex: 'member',
-      key: 'member',
+      dataIndex: 'membership',
+      key: 'membership',
       width: '100px',
     },
     {
@@ -132,6 +132,12 @@ function Users({ dispatch, list: dataSource, loading, total, page: current }) {
       title: '累计消费额',
       dataIndex: 'totalSpending',
       key: 'totalSpending',
+      width: '100px',
+    },
+    {
+      title: '推荐码',
+      dataIndex: 'promotionCode',
+      key: 'promotionCode',
       width: '100px',
     },
     {
@@ -166,11 +172,11 @@ function Users({ dispatch, list: dataSource, loading, total, page: current }) {
         </div>
         <Table
           columns={columns}
-          dataSource={dataSource}
+          dataSource={dataSource.content}
           loading={loading}
           rowKey={record => record.id}
           pagination={false}
-          scroll={{ x: 1725 }}
+          scroll={{ x: 1825 }}
 
         />
         <Pagination

@@ -10,10 +10,11 @@ import ProductModal from './ProductModal';
 function Products({ dispatch, list: dataSource, loading, total, page: current }) {
   function deleteHandler(id) {
     dispatch({
-      type: 'users/remove',
+      type: 'products/remove',
       payload: id,
     });
   }
+
 
   function pageChangeHandler(page) {
     dispatch(routerRedux.push({
@@ -24,17 +25,21 @@ function Products({ dispatch, list: dataSource, loading, total, page: current })
 
   function editHandler(id, values) {
     dispatch({
-      type: 'users/patch',
+      type: 'products/patch',
       payload: { id, values },
     });
   }
 
   function createHandler(values) {
     dispatch({
-      type: 'users/create',
+      type: 'products/create',
       payload: values,
     });
+
   }
+
+
+
 
   const columns = [
     {
@@ -48,8 +53,7 @@ function Products({ dispatch, list: dataSource, loading, total, page: current })
       dataIndex: 'productCode',
       key: 'productCode',
       fixed: 'left',
-      width: '100px',
-      render: text => <a href="">{text}</a>,
+      width: '100px'
     },
     {
       title: '商品类别',
@@ -61,22 +65,19 @@ function Products({ dispatch, list: dataSource, loading, total, page: current })
       title: '商品名',
       dataIndex: 'name',
       key: 'name',
-      width: '100px',
-      render: text => <a href="">{text}</a>,
+      width: '100px'
     },
     {
       title: '品牌',
       dataIndex: 'brand',
       key: 'brand',
-      width: '100px',
-      render: text => <a href="">{text}</a>,
+      width: '100px'
     },
     {
       title: '系列',
       dataIndex: 'series',
       key: 'series',
-      width: '100px',
-      render: text => <a href="">{text}</a>,
+      width: '100px'
     },
     {
       title: '型号',
@@ -87,7 +88,7 @@ function Products({ dispatch, list: dataSource, loading, total, page: current })
     },
     {
       title: '商品价格',
-      dataIndex: 'Price',
+      dataIndex: 'price',
       key: 'Price',
       width: '100px'
     },
@@ -124,8 +125,8 @@ function Products({ dispatch, list: dataSource, loading, total, page: current })
     },
     {
       title: '状态',
-      dataIndex: 'status',
-      key: 'status',
+      dataIndex: 'release',
+      key: 'release',
       width: '100px',
     },
     {
@@ -153,16 +154,22 @@ function Products({ dispatch, list: dataSource, loading, total, page: current })
       width: '100px',
     },
     {
+      title: '标签',
+      dataIndex: 'tags',
+      key: 'tags',
+      width: '100px',
+    },
+    {
       title: '操作',
       key: 'operation',
       fixed: 'right',
       render: (text, record) => (
         <span className={styles.operation}>
           <ProductModal record={record} onOk={editHandler.bind(null, record.id)}>
-            <a>编辑</a>
+            <Button>编辑</Button>
           </ProductModal>
           <Popconfirm title="Confirm to delete?" onConfirm={deleteHandler.bind(null, record.id)}>
-            <a href="">删除</a>
+            <Button href="">删除</Button>
           </Popconfirm>
         </span>
       ),
@@ -179,11 +186,11 @@ function Products({ dispatch, list: dataSource, loading, total, page: current })
         </div>
         <Table
           columns={columns}
-          dataSource={dataSource}
+          dataSource={dataSource.content}
           loading={loading}
           rowKey={record => record.id}
           pagination={false}
-          scroll={{ x: 1900 }}
+          scroll={{ x: 2275 }}
 
         />
         <Pagination

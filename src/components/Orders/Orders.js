@@ -212,7 +212,7 @@ function Orders({ dispatch, list: dataSource, loading, total, page: current }) {
       <div>
         <Table
           columns={columns}
-          dataSource={dataSource}
+          dataSource={dataSource.content}
           loading={loading}
           rowKey={record => record.id}
           pagination={false}

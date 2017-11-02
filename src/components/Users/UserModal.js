@@ -4,7 +4,7 @@ import { Modal, Form, Input ,Upload, Icon, Cascader,Select} from 'antd';
 
 const FormItem = Form.Item;
 const { TextArea } = Input;
-var appServer = "http://localhost:8080/sts/do";
+var appServer = "/api/sts/do";
 var bucket = 'xyq-oss-bucket';
 var endpoint = 'oss-cn-shenzhen.aliyuncs.com';
 
